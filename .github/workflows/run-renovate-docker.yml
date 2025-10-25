@@ -40,4 +40,5 @@ jobs:
             -e DOCKER_HUB_PASSWORD \
             -e RENOVATE_CONFIG_FILE \
             renovate/renovate:latest \
+            ${{ github.repository }} \
             --platform=github
