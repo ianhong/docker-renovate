@@ -6,9 +6,11 @@ on:
     - cron: '0 2 * * *'
   workflow_dispatch: {}
 
+# Add 'issues: write' here
 permissions:
   contents: write
   pull-requests: write
+  issues: write
 
 jobs:
   renovate:
