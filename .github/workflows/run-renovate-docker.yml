@@ -1,4 +1,4 @@
-name: Run Renovate (Docker) to update base-images
+name: Run Renovate to update base-images
 
 on:
   schedule:
@@ -14,31 +14,19 @@ jobs:
   renovate:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Run Renovate Action
+        # Use a specific version tag for stability, not @latest
+        uses: renovate/renovate-action@v40
         with:
-          fetch-depth: 0
+          # Your config file path, relative to the repository root
+          config-file: .github/renovate.json
 
-      - name: Ensure Docker is available
-        run: docker --version
-
-      - name: Run Renovate (Docker)
+          # The token is passed as an input, not an env var
+          # This uses the workflow's built-in token
+          token: ${{ secrets.GITHUB_TOKEN }}
+        
+        # Pass registry credentials as env vars
+        # The Renovate process will automatically detect and use them
         env:
-          # token used by Renovate to create PRs (use a PAT in secrets if you need broader permissions)
-          RENOVATE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # optional Docker Hub auth to avoid rate limits (set these secrets if needed)
           DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
           DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
-          # set config file path inside the container
-          RENOVATE_CONFIG_FILE: /usr/src/app/.github/renovate.json
-        run: |
-          # run the official Renovate Docker image against the checked-out repo
-          docker run --rm \
-            -v "${{ github.workspace }}:/usr/src/app" \
-            -e RENOVATE_TOKEN \
-            -e DOCKER_HUB_USERNAME \
-            -e DOCKER_HUB_PASSWORD \
-            -e RENOVATE_CONFIG_FILE \
-            renovate/renovate:latest \
-            ${{ github.repository }} \
-            --platform=github
