@@ -22,7 +22,8 @@
       "matchManagers": ["dockerfile"],
       "matchFileNames": ["base-images/**"],
       "matchDatasources": ["docker"],
-      "ignoreUnstable": true
+      "ignoreUnstable": true,
+      "minimumReleaseAge": "1 day"
     }
   ]
 }
