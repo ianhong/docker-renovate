@@ -5,6 +5,7 @@
   "schedule": ["before 3am"],
   "prHourlyLimit": 2,
   "prConcurrentLimit": 5,
+  "automergeType": "pr",
   "packageRules": [
     {
       "matchCategories": ["docker"],
@@ -27,3 +28,4 @@
     }
   ]
 }
+
