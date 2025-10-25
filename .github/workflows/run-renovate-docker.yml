@@ -45,6 +45,5 @@ jobs:
             ${{ github.repository }} \
             --platform=github
         # The Renovate process will automatically detect and use them
-        env:
           DOCK"OCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
           DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
