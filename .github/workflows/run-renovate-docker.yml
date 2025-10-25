@@ -33,6 +33,7 @@ jobs:
           DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
           # set config file path inside the container
           RENOVATE_CONFIG_FILE: /usr/src/app/.github/renovate.json
+          LOG_LEVEL: debug
         run: |
           # run the official Renovate Docker image against the checked-out repo
           docker run --rm \
