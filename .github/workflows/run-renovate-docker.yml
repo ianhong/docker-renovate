@@ -15,18 +15,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run Renovate Action
-        # Use a specific version tag for stability, not @latest
-        uses: renovate/renovate-action@v40
+        # The correct path is renovatebot/renovate-action
+        uses: renovatebot/renovate-action@v40
         with:
           # Your config file path, relative to the repository root
           config-file: .github/renovate.json
 
           # The token is passed as an input, not an env var
-          # This uses the workflow's built-in token
           token: ${{ secrets.GITHUB_TOKEN }}
         
         # Pass registry credentials as env vars
         # The Renovate process will automatically detect and use them
         env:
-          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+          DOCK"OCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
           DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
