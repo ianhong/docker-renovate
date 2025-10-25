@@ -29,6 +29,8 @@ jobs:
           # optional Docker Hub auth to avoid rate limits (set these secrets if needed)
           DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
           DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+          # set config file path inside the container
+          RENOVATE_CONFIG_FILE: /usr/src/app/.github/renovate.json
         run: |
           # run the official Renovate Docker image against the checked-out repo
           docker run --rm \
@@ -36,6 +38,6 @@ jobs:
             -e RENOVATE_TOKEN \
             -e DOCKER_HUB_USERNAME \
             -e DOCKER_HUB_PASSWORD \
+            -e RENOVATE_CONFIG_FILE \
             renovate/renovate:latest \
-            --platform=github \
-            --config-file=/usr/src/app/.github/renovate.json
+            --platform=github
