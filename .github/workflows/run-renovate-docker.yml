@@ -26,9 +26,9 @@ jobs:
 
       - name: Run Renovate (Docker)
         env:
-          # token used by Renovate to create PRs (use a PAT in secrets if you need broader permissions)
+          # token used by Renovate to create PRs
           RENOVATE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # optional Docker Hub auth to avoid rate limits (set these secrets if needed)
+          # optional Docker Hub auth to avoid rate limits
           DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
           DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
           # set config file path inside the container
@@ -44,6 +44,3 @@ jobs:
             renovate/renovate:latest \
             ${{ github.repository }} \
             --platform=github
-        # The Renovate process will automatically detect and use them
-          DOCK"OCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
-          DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
