@@ -1,0 +1,28 @@
+{
+  "extends": ["config:base"],
+  "timezone": "UTC",
+  "enabledManagers": ["dockerfile"],
+  "fileMatch": ["(^|/)Dockerfile$"],
+  "schedule": ["before 3am"],
+  "prHourlyLimit": 2,
+  "prConcurrentLimit": 5,
+  "packageRules": [
+    {
+      "matchManagers": ["dockerfile"],
+      "matchPaths": ["base-images/**"],
+      "groupName": "base-images (dockerfile) updates",
+      "automerge": false,
+      "semanticPrefix": "chore(docker):"
+    },
+    {
+      "matchManagers": ["dockerfile"],
+      "matchPaths": ["base-images/**"],
+      "matchDatasources": ["docker"],
+      "ignoreUnstable": true,
+      "stabilityDays": 1
+    }
+  ],
+  "docker": {
+    "pinDigests": false
+  }
+}

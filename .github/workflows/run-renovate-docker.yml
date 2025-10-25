@@ -1,0 +1,41 @@
+name: Run Renovate (Docker) to update base-images
+
+on:
+  schedule:
+    # daily at 02:00 UTC — change as needed
+    - cron: '0 2 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  renovate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Ensure Docker is available
+        run: docker --version
+
+      - name: Run Renovate (Docker)
+        env:
+          # token used by Renovate to create PRs (use a PAT in secrets if you need broader permissions)
+          RENOVATE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # optional Docker Hub auth to avoid rate limits (set these secrets if needed)
+          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+          DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+        run: |
+          # run the official Renovate Docker image against the checked-out repo
+          docker run --rm \
+            -v "${{ github.workspace }}:/usr/src/app" \
+            -e RENOVATE_TOKEN \
+            -e DOCKER_HUB_USERNAME \
+            -e DOCKER_HUB_PASSWORD \
+            renovate/renovate:latest \
+            --platform=github \
+            --config-file=/usr/src/app/.github/renovate.json
