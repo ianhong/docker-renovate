@@ -1,4 +1,4 @@
-name: Run Renovate (Docker) to update base-images
+name: Run Renovate to update public-images
 
 on:
   schedule:
@@ -24,6 +24,12 @@ jobs:
 
       - name: Ensure Docker is available
         run: docker --version
+        
+      - name: List files in workspace
+        run: |
+          echo "Listing all files in the repository checkout:"
+          ls -R
+
 
       - name: Run Renovate (Docker)
         env:
@@ -33,7 +39,7 @@ jobs:
           DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
           DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
           # set config file path inside the container
-          RENOVATE_CONFIG_FILE: /usr/src/app/.github/renovate-base-images.json
+          RENOVATE_CONFIG_FILE: /usr/src/app/.github/renovate-public-images.json
           LOG_LEVEL: debug
         run: |
           # run the official Renovate Docker image against the checked-out repo
