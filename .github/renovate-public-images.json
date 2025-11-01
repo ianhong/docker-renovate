@@ -1,0 +1,32 @@
+{
+  "extends": ["config:recommended"],
+  "timezone": "UTC",
+  "schedule": ["before 3am"],
+  "prHourlyLimit": 2,
+  "prConcurrentLimit": 5,
+
+  "enabledManagers": ["custom.regex"],
+
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "(^|/)public-images/(?<depName>.*?)\\.versions$"
+      ],
+      "matchStrings": [
+        "^(?<currentValue>[a-zA-Z0-9.-]+)$"
+      ],
+      "datasourceTemplate": "docker",
+      "depNameTemplate": "{{depName}}"
+    }
+  ],
+
+  "packageRules": [
+    {
+      "matchManagers": ["custom.regex"],
+      "groupName": "Base Image Version Updates",
+      "groupSlug": "base-images-regex",
+      "minimumReleaseAge": "3 days"
+    }
+  ]
+}
