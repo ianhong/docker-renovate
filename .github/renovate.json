@@ -1,40 +1,34 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended"
-  ],
+  "extends": ["config:recommended"],
+
   "platform": "github",
-  "repositories": [
-    "ianhong/docker-renovate"
-  ],
+  "repositories": ["ianhong/docker-renovate"],
+
   "timezone": "UTC",
-  "schedule": [
-    "before 3am"
-  ],
+  "schedule": ["before 3am"],
   "prHourlyLimit": 2,
   "prConcurrentLimit": 5,
-  "enabledManagers": [
-    "custom.regex"
-  ],
+
+  "enabledManagers": ["custom.regex"],
+
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": [
-        "^public-images/[^/]+\\.versions$",
-        "^[^/]+\\.versions$"
+      "managerFilePatterns": [
+        "/^nginx.versions$/"
       ],
       "matchStrings": [
-        "^(?<currentValue>.+)$"
+        "^(?<currentValue>[a-zA-Z0-9._-]+)$"
       ],
       "datasourceTemplate": "docker",
-      "depNameTemplate": "{{{replace '^(.*/)?([^/]+)\\.versions$' '$2' packageFile}}}"
+      "depNameTemplate": "{{depName}}"
     }
   ],
+
   "packageRules": [
     {
-      "matchManagers": [
-        "custom.regex"
-      ],
+      "matchManagers": ["custom.regex"],
       "groupName": "Base Image Version Updates",
       "groupSlug": "base-images-regex",
       "minimumReleaseAge": "3 days"
