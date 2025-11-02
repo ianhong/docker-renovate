@@ -1,4 +1,4 @@
-name: Run Renovate (versions) to update base-images
+name: Run Renovate to update base-images
 
 on:
   schedule:
