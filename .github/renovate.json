@@ -6,9 +6,10 @@
   "schedule": ["before 3am"],
   
   "vulnerabilityAlerts": {
-    "enabled": true
+    "enabled": true,
+    "osvVulnerabilityAlerts": true
   },
-  "osvVulnerabilityAlerts": true,
+
   "enabledManagers": ["custom.regex"],
   "customManagers": [
     {
@@ -22,6 +23,7 @@
       "datasourceTemplate": "docker"
     }
   ],
+
   "packageRules": [
     {
       "description": "Rule 1: Disable ALL regular updates for custom.regex",
