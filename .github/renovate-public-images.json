@@ -1,5 +1,7 @@
 {
   "extends": ["config:recommended"],
+  "platform": "github",
+  "localDir": true,
   "timezone": "UTC",
   "schedule": ["before 3am"],
   "prHourlyLimit": 2,
