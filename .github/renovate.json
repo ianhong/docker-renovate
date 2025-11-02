@@ -13,8 +13,7 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
-        "^public-images/.*?\\.versions$",
-        "^[^/]+?\\.versions$"
+        "/^nginx.versions$/"
       ],
       "matchStrings": [
         "^(?<depName>[^:]+):(?<currentValue>.+)$"
