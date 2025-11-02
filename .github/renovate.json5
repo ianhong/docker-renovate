@@ -22,7 +22,7 @@
   "osvVulnerabilityAlerts": true, 
 
   // --- Custom Manager Setup (.versions files) ---
-  "enabledManagers": ["custom.regex"],
+  "enabledManagers": ["custom.regex", "dockerfile"],
   "customManagers": [
     {
       "customType": "regex",
