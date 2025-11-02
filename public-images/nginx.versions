@@ -1,1 +1,2 @@
 nginx:1.29.1-alpine-slim
+python:3.9.23-slim-trixie
