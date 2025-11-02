@@ -7,16 +7,12 @@
 
   // --- Global Settings ---
   "pinDigests": false, 
-  "timezone": "America/Los_Angeles", // Pacific Northwest Time Zone
+  "timezone": "America/Los_Angeles",
   "schedule": ["before 3am"],
   
-  // These settings ensure that minor (3.9 -> 3.14) and patch (3.9.23 -> 3.9.25) 
-  // updates are treated as separate candidates so the patch isn't discarded.
   "separateMajorMinor": true,
   "separateMinorPatch": true,
 
-  // --- Security Alerts ---
-  // Enables PRs for critical vulnerabilities, which bypasses the packageRules filter.
   "vulnerabilityAlerts": {
     "enabled": true
   },
@@ -29,38 +25,34 @@
       "customType": "regex",
       "managerFilePatterns": ["public-images/**/*.versions"],
       "matchStrings": [
-        // Simple regex matching 'depName:currentValue'
+        // This regex matches 'depName:currentValue'
         "(?<depName>.*?):(?<currentValue>.*)" 
       ],
       "datasourceTemplate": "docker"
     }
   ],
 
-  // --- Rule Sets: Blocking Major/Minor Updates for Both File Types ---
+  // --- Rule Sets: Final Valid Structure ---
   "packageRules": [
     {
-      "description": "Rule 1: Custom .versions Files (Block Minor/Major)",
-      "matchManagers": ["custom.regex"], 
-      "matchUpdateTypes": [
-        "major",
-        "minor" // Blocks application version bumps (e.g., Python 3.9 -> 3.14)
-      ],
-      "enabled": false, // Disables these high-risk updates
-      "ignoreUnstable": true, // Skips -beta, -rc, etc., for extra stability
-      "groupName": "Base Image Version Updates (.versions)",
-      "groupSlug": "base-images-versions"
+      "description": "Rule 1: Set Common Filters (Ignore Unstable)",
+      // Targets ALL dependencies found by your two managers, including files in base-images/**
+      "matchManagers": ["custom.regex", "dockerfile"], 
+      // This rule only *applies* the stability filter
+      "ignoreUnstable": true 
     },
     {
-      "description": "Rule 2: Standard Dockerfile Updates (Block Minor/Major)",
-      "matchManagers": ["dockerfile"], 
+      "description": "Rule 2: Block Minor/Major Updates",
+      // Targets ALL dependencies from the same two managers
+      "matchManagers": ["custom.regex", "dockerfile"], 
       "matchUpdateTypes": [
         "major",
         "minor"
       ],
-      "enabled": false,
-      "ignoreUnstable": true,
-      "groupName": "Dockerfile Dependency Updates",
-      "groupSlug": "dockerfile-updates"
+      // This rule does the blocking, allowing only patch/digest/security to pass
+      "enabled": false, 
+      "groupName": "Low-Risk Update Group", 
+      "groupSlug": "low-risk-updates"
     }
   ]
 }
