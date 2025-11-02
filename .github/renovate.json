@@ -16,7 +16,7 @@
         "public-images/**/*.versions"
       ],
       "matchStrings": [
-        "^\\s*(?<depName>[\\w\\d._-]+)\\s*:\\s*(?<currentValue>.+?)\\s*$"
+        "(?<depName>.*?):(?<currentValue>.*)"
       ],
       "datasourceTemplate": "docker"
     }
