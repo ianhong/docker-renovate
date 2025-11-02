@@ -2,9 +2,6 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
 
-  "platform": "github",
-  "repositories": ["ianhong/docker-renovate"],
-
   "timezone": "UTC",
   "schedule": ["before 3am"],
   "prHourlyLimit": 2,
@@ -16,13 +13,13 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
-        "/^nginx.versions$/"
+        "^public-images/.*?\\.versions$",
+        "^[^/]+?\\.versions$"
       ],
       "matchStrings": [
-        "^(?<currentValue>[a-zA-Z0-9._-]+)$"
+        "^(?<depName>[^:]+):(?<currentValue>.+)$"
       ],
-      "datasourceTemplate": "docker",
-      "depNameTemplate": "{{depName}}"
+      "datasourceTemplate": "docker"
     }
   ],
 
