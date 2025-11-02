@@ -26,7 +26,7 @@
 
   "packageRules": [
     {
-      "description": "Rule 1: Disable ALL regular updates for custom.regex",
+      "description": "Disable ALL regular version updates (security PRs are separate)",
       "matchManagers": ["custom.regex"],
       "matchUpdateTypes": [
         "major",
@@ -36,14 +36,6 @@
         "digest"
       ],
       "enabled": false
-    },
-    {
-      "description": "Rule 2: Enable ONLY security updates for custom.regex",
-      "matchManagers": ["custom.regex"],
-      "matchLabel": "security",
-      "enabled": true,
-      "groupName": "Base Image Version Updates",
-      "groupSlug": "base-images-regex"
     }
   ]
 }
