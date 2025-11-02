@@ -5,6 +5,8 @@
   "timezone": "UTC",
   "schedule": ["before 3am"],
   
+  // We can leave this on. It's good for catching
+  // major *application-level* CVEs, if one ever happens.
   "vulnerabilityAlerts": {
     "enabled": true,
     "osvVulnerabilityAlerts": true
@@ -26,16 +28,18 @@
 
   "packageRules": [
     {
-      "description": "Disable ALL regular version updates (security PRs are separate)",
+      "description": "Disable minor and major updates, but ALLOW patch updates",
       "matchManagers": ["custom.regex"],
       "matchUpdateTypes": [
         "major",
-        "minor",
-        "patch",
-        "pin",
-        "digest"
+        "minor"
       ],
-      "enabled": false
+      "enabled": false,
+
+      // --- Add your groupName back in ---
+      // This will now apply to all the 'patch' updates
+      "groupName": "Base Image Version Updates",
+      "groupSlug": "base-images-regex"
     }
   ]
 }
