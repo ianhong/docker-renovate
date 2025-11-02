@@ -46,8 +46,6 @@
       "matchManagers": ["custom.regex"],
       "matchLabel": "security",
       "enabled": true,
-      
-      // --- YOUR SETTINGS RE-APPLIED ---
       "groupName": "Base Image Version Updates",
       "groupSlug": "base-images-regex"
     }
