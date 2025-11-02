@@ -1,5 +1,9 @@
 {
   "extends": ["config:recommended"],
+  
+  "platform": "github",
+  "repositories": ["ianhong/docker-renovate"],
+
   "timezone": "UTC",
   "schedule": ["before 3am"],
   "prHourlyLimit": 2,
@@ -11,7 +15,7 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
-        "public-images/(?<depName>.*?)\\.versions$"
+        "(\\./)?public-images/(?<depName>.*?)\\.versions$"
       ],
       "matchStrings": [
         "^(?<currentValue>[a-zA-Z0-9.-]+)$"

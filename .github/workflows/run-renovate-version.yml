@@ -24,7 +24,7 @@ jobs:
 
       - name: Ensure Docker is available
         run: docker --version
-        
+
       - name: List files in workspace
         run: |
           echo "Listing all files in the repository checkout:"
