@@ -6,7 +6,8 @@
 
   "timezone": "UTC",
   "schedule": ["before 3am"],
-  
+  "separateMajorMinor": true,
+  "separateMinorPatch": true,
   "vulnerabilityAlerts": {
     "enabled": true,
     "osvVulnerabilityAlerts": true
@@ -31,7 +32,7 @@
       "description": "Disable minor and major updates, but ALLOW patch updates",
       "matchManagers": ["custom.regex"],
       "matchUpdateTypes": [
-        "major"
+        "major", "minor"
       ],
       "enabled": false,
       "groupName": "Base Image Version Updates",
