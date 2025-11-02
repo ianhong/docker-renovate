@@ -5,14 +5,10 @@
   "timezone": "UTC",
   "schedule": ["before 3am"],
   
-  // 1. ENABLE VULNERABILITY DETECTION
   "vulnerabilityAlerts": {
     "enabled": true
   },
   "osvVulnerabilityAlerts": true,
-
-
-  // --- Your Custom Manager ---
   "enabledManagers": ["custom.regex"],
   "customManagers": [
     {
@@ -26,8 +22,6 @@
       "datasourceTemplate": "docker"
     }
   ],
-
-  // --- 2. PACKAGE RULES (Now correctly scoped) ---
   "packageRules": [
     {
       "description": "Rule 1: Disable ALL regular updates for custom.regex",
