@@ -28,7 +28,8 @@
       "groupName": "Base Image Version Updates",
       "groupSlug": "base-images-regex",
       "minimumReleaseAge": "3 days",
-      "matchUpdateTypes": ["patch"]
+      "matchUpdateTypes": ["patch"],
+      "rangeStrategy": "bump"
     }
   ]
 }
