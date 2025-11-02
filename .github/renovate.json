@@ -1,12 +1,13 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended"],
+  "$schema": "https://docs.renovate.bot/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "docker:pinDigests"
+  ],
 
   "timezone": "UTC",
   "schedule": ["before 3am"],
   
-  // We can leave this on. It's good for catching
-  // major *application-level* CVEs, if one ever happens.
   "vulnerabilityAlerts": {
     "enabled": true,
     "osvVulnerabilityAlerts": true
@@ -35,9 +36,6 @@
         "minor"
       ],
       "enabled": false,
-
-      // --- Add your groupName back in ---
-      // This will now apply to all the 'patch' updates
       "groupName": "Base Image Version Updates",
       "groupSlug": "base-images-regex"
     }
