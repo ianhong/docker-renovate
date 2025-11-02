@@ -1,31 +1,36 @@
 {
   "extends": ["config:recommended"],
+  
+  "platform": "github",
+  "repositories": ["ianhong/docker-renovate"],
+
   "timezone": "UTC",
-  "enabledManagers": ["dockerfile"],
   "schedule": ["before 3am"],
   "prHourlyLimit": 2,
   "prConcurrentLimit": 5,
-  "automergeType": "pr",
+
+  "enabledManagers": ["custom.regex"],
+
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "(\\./)?public-images/(?<depName>.*?)\\.versions$"
+      ],
+      "matchStrings": [
+        "^(?<currentValue>[a-zA-Z0-9.-]+)$"
+      ],
+      "datasourceTemplate": "docker",
+      "depNameTemplate": "{{depName}}"
+    }
+  ],
+
   "packageRules": [
     {
-      "matchCategories": ["docker"],
-      "pinDigests": false
-    },
-    {
-      "matchManagers": ["dockerfile"],
-      "matchFileNames": ["base-images/**"],
-      "groupName": "base-images (dockerfile) updates",
-      "automerge": false,
-      "semanticCommitType": "chore",
-      "semanticCommitScope": "docker"
-    },
-    {
-      "matchManagers": ["dockerfile"],
-      "matchFileNames": ["base-images/**"],
-      "matchDatasources": ["docker"],
-      "ignoreUnstable": true,
-      "minimumReleaseAge": "1 day"
+      "matchManagers": ["custom.regex"],
+      "groupName": "Base Image Version Updates",
+      "groupSlug": "base-images-regex",
+      "minimumReleaseAge": "3 days"
     }
   ]
 }
-
