@@ -9,6 +9,10 @@
   "pinDigests": false, // Explicitly confirms digest pinning is disabled
   "timezone": "America/Los_Angeles", // Pacific Northwest Time Zone (PST/PDT)
   "schedule": ["before 3am"],
+
+  "prHourlyLimit": 5,
+  "prConcurrentLimit": 5,
+  "automergeType": "pr",  
   
   // These settings ensure patch updates are separated from minor updates and not discarded.
   "separateMajorMinor": true,
