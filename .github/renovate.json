@@ -31,8 +31,7 @@
       "description": "Disable minor and major updates, but ALLOW patch updates",
       "matchManagers": ["custom.regex"],
       "matchUpdateTypes": [
-        "major",
-        "minor"
+        "major"
       ],
       "enabled": false,
       "groupName": "Base Image Version Updates",
