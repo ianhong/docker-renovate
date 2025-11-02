@@ -1,5 +1,5 @@
 {
-  "$schema": "https://docs.renovate.bot/renovate-schema.json",
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended",
     "docker:pinDigests"
@@ -21,7 +21,7 @@
         "public-images/**/*.versions"
       ],
       "matchStrings": [
-        "(?<depName>.*?):(?<currentValue>.*)"
+        "(?<depName>.*?):(?<currentValue>.*?)(@(?<currentDigest>sha256:[a-f0-9]{64}))?"
       ],
       "datasourceTemplate": "docker"
     }
