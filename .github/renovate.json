@@ -1,8 +1,7 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "$schema": "https://docs.renovate.bot/renovate-schema.json",
   "extends": [
-    "config:recommended",
-    "docker:pinDigests"
+    "config:recommended"
   ],
 
   "timezone": "UTC",
@@ -21,7 +20,7 @@
         "public-images/**/*.versions"
       ],
       "matchStrings": [
-        "(?<depName>[^:]+):(?<currentValue>[^@\r\n]+)(@(?<currentDigest>sha256:[a-f0-9]{64}))?"
+        "(?<depName>.*?):(?<currentValue>.*)"
       ],
       "datasourceTemplate": "docker"
     }
