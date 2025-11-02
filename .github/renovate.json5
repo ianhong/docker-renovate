@@ -5,59 +5,69 @@
     "config:recommended"
   ],
 
-  // --- Global Settings ---
-  "pinDigests": false, // Explicitly disable digest pinning
-  "timezone": "America/Los_Angeles",
+  // --- Global Configuration ---
+  "pinDigests": false, // Explicitly confirms digest pinning is disabled
+  "timezone": "America/Los_Angeles", // Pacific Northwest Time Zone (PST/PDT)
   "schedule": ["before 3am"],
   
-  // Separation ensures patch updates (3.9.23 -> 3.9.25) are treated separately
-  // from minor updates (3.9.x -> 3.14.x) and not discarded.
+  // These settings ensure patch updates are separated from minor updates and not discarded.
   "separateMajorMinor": true,
   "separateMinorPatch": true,
 
-  // --- Security Alerts (Top-Level) ---
+  // --- Security Alerts ---
+  // Enables PRs for critical vulnerabilities detected via GitHub/OSV.dev
   "vulnerabilityAlerts": {
     "enabled": true
   },
   "osvVulnerabilityAlerts": true, 
 
-  // --- Custom Manager Setup (for .versions files) ---
+  // --- Custom Manager Setup (.versions files) ---
   "enabledManagers": ["custom.regex"],
   "customManagers": [
     {
       "customType": "regex",
-      "managerFilePatterns": ["public-images/**/*.versions"],
+      "managerFilePatterns": ["public-images/**/*.versions"], // Explicitly finds custom files
       "matchStrings": [
-        // Simple regex: dependency name followed by its value
+        // Simple regex: dependency name followed by its value (currentValue is greedy)
         "(?<depName>.*?):(?<currentValue>.*)" 
       ],
       "datasourceTemplate": "docker"
     }
   ],
 
-  // --- Rule Sets: Blocking Logic (Separated for Schema Compliance) ---
+  // --- Rule Sets: Patch-Only Policy via Exclusion ---
   "packageRules": [
-    // --- RULE 1: Apply Stability Filters (Ignore Unstable) ---
+    // RULE 1: Apply Stability Filter (Must be a separate rule to avoid schema error)
     {
-      "description": "Rule 1: Always Ignore Unstable Releases for Managed Files",
-      // Match all relevant dependencies using a file path OR the custom manager
+      "description": "Rule 1: Always Ignore Unstable Releases",
       "matchManagers": ["custom.regex", "dockerfile"], 
-      "matchFileNames": ["base-images/**", "public-images/**/*.versions"],
-      "ignoreUnstable": true // Apply this globally to those files
+      "ignoreUnstable": true 
     },
     
-    // --- RULE 2: Block Minor/Major Updates (The core policy) ---
+    // RULE 2: Policy for Custom (.versions) Files 
     {
-      "description": "Rule 2: Block Minor/Major Updates",
-      "matchManagers": ["custom.regex", "dockerfile"], 
-      "matchFileNames": ["base-images/**", "public-images/**/*.versions"],
+      "description": "Custom Files: Patch Only Policy",
+      "matchManagers": ["custom.regex"], 
       "matchUpdateTypes": [
         "major",
         "minor"
       ],
-      "enabled": false, // Disables these high-risk updates
-      "groupName": "Low-Risk Update Group", 
-      "groupSlug": "low-risk-updates"
+      "enabled": false, // Disables these high-risk updates (rejects Python 3.14.x)
+      "groupName": "Base Image Version Updates (.versions)",
+      "groupSlug": "base-images-versions"
+    },
+    
+    // RULE 3: Policy for Dockerfiles (base-images/**/Dockerfiles)
+    {
+      "description": "Dockerfile: Patch Only Policy",
+      "matchManagers": ["dockerfile"], 
+      "matchUpdateTypes": [
+        "major",
+        "minor"
+      ],
+      "enabled": false, // Disables these high-risk updates (rejects Ubuntu 24.04 LTS)
+      "groupName": "Dockerfile Dependency Updates",
+      "groupSlug": "dockerfile-updates"
     }
   ]
 }
