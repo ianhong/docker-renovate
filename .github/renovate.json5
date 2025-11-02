@@ -6,13 +6,16 @@
   ],
 
   // --- Global Settings ---
-  "pinDigests": false, 
+  "pinDigests": false, // Explicitly disable digest pinning
   "timezone": "America/Los_Angeles",
   "schedule": ["before 3am"],
   
+  // Separation ensures patch updates (3.9.23 -> 3.9.25) are treated separately
+  // from minor updates (3.9.x -> 3.14.x) and not discarded.
   "separateMajorMinor": true,
   "separateMinorPatch": true,
 
+  // --- Security Alerts (Top-Level) ---
   "vulnerabilityAlerts": {
     "enabled": true
   },
@@ -25,32 +28,34 @@
       "customType": "regex",
       "managerFilePatterns": ["public-images/**/*.versions"],
       "matchStrings": [
-        // This regex matches 'depName:currentValue'
+        // Simple regex: dependency name followed by its value
         "(?<depName>.*?):(?<currentValue>.*)" 
       ],
       "datasourceTemplate": "docker"
     }
   ],
 
-  // --- Rule Sets: Final Valid Structure ---
+  // --- Rule Sets: Blocking Logic (Separated for Schema Compliance) ---
   "packageRules": [
+    // --- RULE 1: Apply Stability Filters (Ignore Unstable) ---
     {
-      "description": "Rule 1: Set Common Filters (Ignore Unstable)",
-      // Targets ALL dependencies found by your two managers, including files in base-images/**
+      "description": "Rule 1: Always Ignore Unstable Releases for Managed Files",
+      // Match all relevant dependencies using a file path OR the custom manager
       "matchManagers": ["custom.regex", "dockerfile"], 
-      // This rule only *applies* the stability filter
-      "ignoreUnstable": true 
+      "matchFileNames": ["base-images/**", "public-images/**/*.versions"],
+      "ignoreUnstable": true // Apply this globally to those files
     },
+    
+    // --- RULE 2: Block Minor/Major Updates (The core policy) ---
     {
       "description": "Rule 2: Block Minor/Major Updates",
-      // Targets ALL dependencies from the same two managers
       "matchManagers": ["custom.regex", "dockerfile"], 
+      "matchFileNames": ["base-images/**", "public-images/**/*.versions"],
       "matchUpdateTypes": [
         "major",
         "minor"
       ],
-      // This rule does the blocking, allowing only patch/digest/security to pass
-      "enabled": false, 
+      "enabled": false, // Disables these high-risk updates
       "groupName": "Low-Risk Update Group", 
       "groupSlug": "low-risk-updates"
     }
