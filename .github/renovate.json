@@ -27,7 +27,8 @@
       "matchManagers": ["custom.regex"],
       "groupName": "Base Image Version Updates",
       "groupSlug": "base-images-regex",
-      "minimumReleaseAge": "3 days"
+      "minimumReleaseAge": "3 days",
+      "updateTypes": ["patch"]
     }
   ]
 }
