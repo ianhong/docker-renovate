@@ -66,6 +66,8 @@
         "minor"
       ],
       "enabled": false, // Disables these high-risk updates (rejects Ubuntu 24.04 LTS)
+      "matchFileNames": ["base-images/**"], 
+      "matchDatasources": ["docker"],       
       "groupName": "Dockerfile Dependency Updates",
       "groupSlug": "dockerfile-updates"
     }
