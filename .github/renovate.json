@@ -4,11 +4,16 @@
 
   "timezone": "UTC",
   "schedule": ["before 3am"],
-  "prHourlyLimit": 2,
-  "prConcurrentLimit": 5,
+  
+  // 1. ENABLE VULNERABILITY DETECTION
+  "vulnerabilityAlerts": {
+    "enabled": true
+  },
+  "osvVulnerabilityAlerts": true,
 
+
+  // --- Your Custom Manager ---
   "enabledManagers": ["custom.regex"],
-
   "customManagers": [
     {
       "customType": "regex",
@@ -22,13 +27,29 @@
     }
   ],
 
+  // --- 2. PACKAGE RULES (Now correctly scoped) ---
   "packageRules": [
     {
+      "description": "Rule 1: Disable ALL regular updates for custom.regex",
       "matchManagers": ["custom.regex"],
+      "matchUpdateTypes": [
+        "major",
+        "minor",
+        "patch",
+        "pin",
+        "digest"
+      ],
+      "enabled": false
+    },
+    {
+      "description": "Rule 2: Enable ONLY security updates for custom.regex",
+      "matchManagers": ["custom.regex"],
+      "matchLabel": "security",
+      "enabled": true,
+      
+      // --- YOUR SETTINGS RE-APPLIED ---
       "groupName": "Base Image Version Updates",
-      "groupSlug": "base-images-regex",
-      "minimumReleaseAge": "3 days",
-      "allowedVersions": "~{{currentVersion}}"
+      "groupSlug": "base-images-regex"
     }
   ]
 }
