@@ -19,15 +19,15 @@
   "customManagers": [
     {
       "customType": "regex",
-      "managerFilePatterns": [
-        "(\\./)?public-images/(?<depName>.*?)\\.versions$",
-        "(\\./)?(?<depName>[^/]+?)\\.versions$"
+      "fileMatch": [
+        "^public-images/[^/]+\\.versions$",
+        "^[^/]+\\.versions$"
       ],
       "matchStrings": [
-        "^(?<currentValue>[a-zA-Z0-9._-]+)$"
+        "^(?<currentValue>.+)$"
       ],
       "datasourceTemplate": "docker",
-      "depNameTemplate": "{{depName}}"
+      "depNameTemplate": "{{{replace '^(.*/)?([^/]+)\\.versions$' '$2' packageFile}}}"
     }
   ],
   "packageRules": [
