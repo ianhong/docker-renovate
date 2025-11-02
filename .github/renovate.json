@@ -13,8 +13,7 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
-        "^public-images/.*?\\.versions$",
-        "^[^/]+?\\.versions$"
+        "public-images/**/*.versions"
       ],
       "matchStrings": [
         "^(?<depName>[^:]+):(?<currentValue>.+)$"
