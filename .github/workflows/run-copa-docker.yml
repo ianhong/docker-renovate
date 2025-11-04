@@ -54,8 +54,7 @@ jobs:
 
           # This is the final name we want on Docker Hub
           # It combines the repo name with the new tag
-          # THIS IS THE CORRECT LINE
-          TARGET_IMAGE="${{ env.IMAGE_TO_PATCH%:* }}:${{ env.PATCHED_IMAGE_TAG }}"
+          TARGET_IMAGE="${{ env.IMAGE_TO_PATCH }}:${{ env.PATCHED_IMAGE_TAG }}"
 
           echo "Tagging local image $LOCAL_PATCHED_IMAGE as $TARGET_IMAGE"
           docker tag "$LOCAL_PATCHED_IMAGE" "$TARGET_IMAGE"
