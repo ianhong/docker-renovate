@@ -34,6 +34,11 @@ jobs:
           output: 'trivy-report.json'
           # Don't fail the job; we want Copa to fix it
           exit-code: '0'
+      - name: 'Display Trivy Report for Debugging'
+        run: |
+          echo "--- Trivy Report Contents (what Copa will patch) ---"
+          jq . trivy-report.json
+          echo "----------------------------------------------------"
 
       - name: 'Run Copa to patch the image'
         id: 'copa'
